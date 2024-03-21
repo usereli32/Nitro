@@ -1,3 +1,4 @@
+import os
 import requests
 import random
 import string
@@ -19,7 +20,7 @@ def send_request_and_check():
     url = f"{base_url}{code}?with_application=false&with_subscription_plan=true"
     response = requests.get(url)
     if response.status_code == 200:
-        discord_webhook_url = "https://discord.com/api/webhooks/1220326454857044062/FqofKkbX8AFL8_TS3yLY_SzRwYRz-UVlBu3AQk-llohUk_e2-75eSNu65oJ5NGQDJAf1"
+        discord_webhook_url = os.getenv("HOOKS")  # Retrieve webhook URL from environment variable
         discord_message = f"Generated code: {code}\nFull URL: {url}"
         send_discord_message(discord_webhook_url, discord_message)
     else:
