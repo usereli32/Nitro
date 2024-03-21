@@ -19,6 +19,7 @@ def send_request_and_check():
     code = generate_code()
     url = f"{base_url}{code}?with_application=false&with_subscription_plan=true"
     response = requests.get(url)
+    print(f"Generated code: {code}\nFull URL: {url}")  # Print every generated code and its full URL
     if response.status_code == 200:
         discord_webhook_url = os.getenv("HOOKS")  # Retrieve webhook URL from environment variable
         discord_message = f"Generated code: {code}\nFull URL: {url}"
