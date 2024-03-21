@@ -1,3 +1,4 @@
+
 import os
 import requests
 import random
@@ -5,6 +6,7 @@ import string
 import time
 import discord
 from flask import Flask
+from threading import Thread
 
 app = Flask(__name__)
 
@@ -19,7 +21,6 @@ def send_request_and_check():
     code = generate_code()
     url = f"{base_url}{code}?with_application=false&with_subscription_plan=true"
     response = requests.get(url)
-    print(f"Generated code: {code}\nFull URL: {url}")  # Print every generated code and its full URL
     if response.status_code == 200:
         discord_webhook_url = os.getenv("HOOKS")  # Retrieve webhook URL from environment variable
         discord_message = f"Generated code: {code}\nFull URL: {url}"
@@ -42,8 +43,12 @@ def index():
 # Main loop
 if __name__ == "__main__":
     # Run Flask app in a separate thread
-    from threading import Thread
     Thread(target=app.run, kwargs={'host':'0.0.0.0','port':5000}).start()
+    
+    # Send initial message to webhook
+    discord_webhook_url = os.getenv("HOOKS")  # Retrieve webhook URL from environment variable
+    initial_message = "Script started!"
+    send_discord_message(discord_webhook_url, initial_message)
     
     while True:
         send_request_and_check()
