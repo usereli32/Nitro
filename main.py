@@ -46,7 +46,7 @@ def send_notification():
     global generated_code_count
     requests.post(placeholder_post_url, data={'code_count': generated_code_count})
     generated_code_count = 0  # Reset the count for the next 10 minutes
-    threading.Timer(1800, send_notification).start()  # Schedule the next notification after 10 minutes
+    threading.Timer(900, send_notification).start()  # Schedule the next notification after 10 minutes
 
 if __name__ == "__main__":
     # Start Flask app in a separate thread
