@@ -19,7 +19,7 @@ def generate_code():
     global generated_code_count
     generated_code_count += 1
     characters = string.ascii_letters + string.digits
-    return ''.join(random.choice(characters) for _ in range(24))
+    return ''.join(random.choice(characters) for _ in range(18))
 
 def send_requests(code):
     """Send GET and POST requests."""
